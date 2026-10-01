@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="hi"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a0f">
+  <title>Gullak S04(2026)</title>
+  <style>
+    @property --progress {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: 0deg;
+    }
+    :root {
+      color-scheme: dark;
+      --paper: #f3e8d5;
+      --gold: #d6ad76;
+      --dim: #8c827b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: max(25px, env(safe-area-inset-top)) 15px max(40px, env(safe-area-inset-bottom));
+      color: var(--paper);
+      background:
+        radial-gradient(ellipse 75% 33% at 50% 0%, rgba(119, 74, 54, .22), transparent 100%),
+        radial-gradient(ellipse 80% 42% at 50% 52%, rgba(61, 37, 47, .12), transparent 100%),
+        #09090b;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Devanagari", Mangal, sans-serif;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .instruction {
+      position: relative;
+      margin: 0 0 19px;
+      padding-bottom: 15px;
+      color: #f1dfc8;
+      font-size: clamp(18px, 5.1vw, 21px);
+      font-weight: 600;
+      line-height: 1.55;
+      text-wrap: balance;
+    }
+    .instruction::after {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 46px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      content: "";
+      transform: translateX(-50%);
+    }
+    .poster-frame {
+      position: relative;
+      width: min(100%, 390px);
+      margin: 0 auto;
+      padding: 6px;
+      border: 1px solid rgba(214, 173, 118, .39);
+      border-radius: 19px;
+      background: linear-gradient(145deg, rgba(237, 206, 159, .23), rgba(49, 37, 37, .68) 42%, rgba(214, 173, 118, .11));
+      box-shadow: 0 28px 70px rgba(0,0,0,.64), 0 0 65px rgba(159, 91, 62, .13);
+    }
+    .poster-art {
+      display: block;
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      border-radius: 13px;
+      object-fit: cover;
+      background: #181116;
+    }
+    h1 {
+      margin: 22px 0 30px;
+      color: #f0e4d2;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      font-size: clamp(27px, 7.6vw, 38px);
+      font-weight: 500;
+      letter-spacing: .085em;
+      line-height: 1.22;
+      text-shadow: 0 2px 28px rgba(218, 172, 111, .13);
+      overflow-wrap: anywhere;
+    }
+    .ad-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 105px;
+      margin: 22px 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(214, 173, 118, .075);
+      border-bottom: 1px solid rgba(214, 173, 118, .075);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.012), transparent);
+    }
+    .ad-slot.leaderboard-slot {
+      position: relative;
+      left: 50%;
+      width: min(728px, calc(100vw - 30px));
+      max-width: none;
+      min-height: 90px;
+      transform: translateX(-50%);
+    }
+    .leaderboard-slot iframe {
+      height: auto !important;
+      aspect-ratio: 728 / 90;
+    }
+    .ad-slot iframe,
+    .ad-slot img,
+    .ad-slot ins {
+      max-width: 100% !important;
+    }
+    .direct-ad {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border: 1px solid rgba(167, 174, 219, .18);
+      border-radius: 10px;
+      color: #c4c7d8;
+      background: rgba(28, 30, 42, .75);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: .12em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .direct-ad:hover {
+      border-color: rgba(167, 174, 219, .4);
+      background: rgba(41, 42, 59, .8);
+    }
+    .timer-box {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      margin-top: 27px;
+      padding: 33px 20px 29px;
+      border: 1px solid rgba(167, 174, 219, .15);
+      border-radius: 25px;
+      background: linear-gradient(145deg, rgba(28, 30, 42, .78), rgba(14, 15, 21, .9) 68%);
+      box-shadow: 0 24px 60px rgba(0,0,0,.4), inset 0 1px rgba(255,255,255,.055);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+    .timer-box::before {
+      position: absolute;
+      z-index: -1;
+      top: -120px;
+      left: 50%;
+      width: 250px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(115, 128, 231, .16), rgba(145, 104, 222, .06) 48%, transparent 72%);
+      content: "";
+      filter: blur(40px);
+      transform: translateX(-50%);
+    }
+    .timer-box h2 {
+      margin: 0 0 28px;
+      color: #a8adbd;
+      font-size: 10px;
+      font-weight: 650;
+      letter-spacing: .2em;
+      line-height: 1.6;
+      text-transform: uppercase;
+    }
+    .timer {
+      position: relative;
+      display: grid;
+      width: clamp(172px, 45vw, 188px);
+      height: clamp(172px, 45vw, 188px);
+      place-items: center;
+      margin: auto;
+      border-radius: 50%;
+      background: conic-gradient(
+        from -90deg,
+        #75ccff 0deg,
+        #a58bff var(--progress, 0deg),
+        rgba(255,255,255,.085) var(--progress, 0deg) 360deg
+      );
+      box-shadow: 0 0 38px rgba(121, 142, 255, .1), 0 0 0 7px rgba(255,255,255,.018);
+      transition: box-shadow .8s ease, filter .8s ease;
+    }
+    .timer::before {
+      position: absolute;
+      z-index: -1;
+      inset: -9px;
+      border: 1px solid rgba(157, 166, 236, .13);
+      border-radius: 50%;
+      content: "";
+      opacity: .42;
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .timer::after {
+      position: absolute;
+      inset: -19px;
+      border-radius: 50%;
+      background: repeating-conic-gradient(
+        from -90deg,
+        rgba(135, 176, 255, .62) 0deg 17deg,
+        transparent 17deg 36deg
+      );
+      content: "";
+      opacity: .48;
+      pointer-events: none;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+      transition: opacity .7s ease, filter .7s ease;
+    }
+    .timer-section.is-running .timer {
+      box-shadow: 0 0 44px rgba(121, 142, 255, .2), 0 0 0 7px rgba(255,255,255,.025);
+      filter: drop-shadow(0 0 7px rgba(142, 130, 255, .14));
+    }
+    .timer-section.is-running .timer::before {
+      opacity: .85;
+      animation: calmHalo 3.6s ease-in-out infinite;
+    }
+    .timer-section.is-running .timer::after {
+      opacity: .92;
+      filter: drop-shadow(0 0 4px rgba(138, 160, 255, .24));
+    }
+    .timer-section.is-complete .timer {
+      box-shadow: 0 0 48px rgba(139, 157, 255, .24), 0 0 0 8px rgba(255,255,255,.035);
+      filter: drop-shadow(0 0 10px rgba(173, 141, 255, .2));
+    }
+    .timer-section.is-complete .timer::before {
+      opacity: .95;
+    }
+    .timer-section.is-complete .timer::after { opacity: 1; }
+    #seconds.tick {
+      animation: numberTick .38s cubic-bezier(.2,.75,.25,1);
+    }
+    .timer-inner {
+      display: grid;
+      width: calc(100% - 11px);
+      height: calc(100% - 11px);
+      place-content: center;
+      border: 1px solid rgba(191, 198, 235, .13);
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 35%, #202332, #12131a 73%);
+      box-shadow: inset 0 1px rgba(255,255,255,.04);
+    }
+    #seconds {
+      color: #f2f4ff;
+      font-size: clamp(70px, 21vw, 82px);
+      font-weight: 560;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      letter-spacing: -.075em;
+      text-shadow: 0 0 27px rgba(162, 176, 255, .24);
+    }
+    .unit {
+      margin-top: 10px;
+      color: #858b9e;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .22em;
+    }
+    #status {
+      min-height: 18px;
+      margin: 19px 0 0;
+      color: #aeb3c3;
+      font-size: 11px;
+    }
+    @keyframes calmHalo {
+      0%, 100% { opacity: .45; transform: scale(.99); }
+      50% { opacity: .85; transform: scale(1.025); }
+    }
+    @keyframes numberTick {
+      0% { opacity: .68; transform: translateY(2px) scale(.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @media (max-width: 360px) {
+      body { padding-right: 13px; padding-left: 13px; }
+      .poster-frame { width: 100%; }
+      .timer-box { padding-right: 14px; padding-left: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  
+    /* New ad containers fit the creative size and remain within the viewport. */
+    .ad-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      min-width: 0;
+      min-height: 0;
+      height: auto;
+      margin: 22px auto;
+      overflow: visible;
+      border: 0;
+      background: transparent;
+    }
+    .ad-slot.leaderboard-slot {
+      left: auto;
+      width: fit-content;
+      min-height: 0;
+      transform: none;
+    }
+    .ad-slot iframe,
+    .ad-slot img,
+    .ad-slot ins {
+      max-width: 100% !important;
+      height: auto;
+    }
+</style>
+  <script src="https://pl31588345.profitableratecpmnetwork.com/fe/62/23/fe6223748ea15621961dc24a33c9a472.js"></script>
+<script src="https://pl31588345.profitableratecpmnetwork.com/fe/62/23/fe6223748ea15621961dc24a33c9a472.js"></script>
+</head>
+<body>
+  <main>
+    <!-- Change this line if you want different Hindi wording. -->
+    <p class="instruction">ये मूवी पाने के लिए नीचे तक स्क्रॉल करें</p>
+
+    <!-- Keep chumbak.png in the same folder as index.html. -->
+    <div class="poster-frame">
+      <img class="poster-art" src="gullak4.jpg" alt="Gullak S04(2026) movie poster">
+    </div>
+
+    <!-- Change the movie name here. -->
+    <h1>Gullak S04(2026)</h1>
+
+<div class="ad-slot" aria-label="Advertisement">
+  <script async="async" data-cfasync="false" src="https://pl31588346.profitableratecpmnetwork.com/cd3005a289e1b7ab46b9a68452186af6/invoke.js"></script>
+  <div id="container-cd3005a289e1b7ab46b9a68452186af6"></div>
+</div>
+
+<div class="ad-slot" aria-label="Advertisement">
+  <script async="async" data-cfasync="false" src="https://pl31588346.profitableratecpmnetwork.com/cd3005a289e1b7ab46b9a68452186af6/invoke.js"></script>
+  <div id="container-cd3005a289e1b7ab46b9a68452186af6"></div>
+</div>
+
+<div class="ad-slot" style="width:min(468px, 100%); min-height:60px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '60389fe0b1056893ffca3f7f2d029f61',
+      'format' : 'iframe',
+      'height' : 60,
+      'width' : 468,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/60389fe0b1056893ffca3f7f2d029f61/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(160px, 100%); min-height:600px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '22f4ae31f0aebb9b97364c4dbd2b061a',
+      'format' : 'iframe',
+      'height' : 600,
+      'width' : 160,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/22f4ae31f0aebb9b97364c4dbd2b061a/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(160px, 100%); min-height:600px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '22f4ae31f0aebb9b97364c4dbd2b061a',
+      'format' : 'iframe',
+      'height' : 600,
+      'width' : 160,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/22f4ae31f0aebb9b97364c4dbd2b061a/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(728px, 100%); min-height:90px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '961898332b428d637c1e67cf875348d2',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/961898332b428d637c1e67cf875348d2/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(728px, 100%); min-height:90px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '961898332b428d637c1e67cf875348d2',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/961898332b428d637c1e67cf875348d2/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(728px, 100%); min-height:90px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '961898332b428d637c1e67cf875348d2',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/961898332b428d637c1e67cf875348d2/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(320px, 100%); min-height:50px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '72a2f0a46dd99cbc2b70804fe643c92f',
+      'format' : 'iframe',
+      'height' : 50,
+      'width' : 320,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/72a2f0a46dd99cbc2b70804fe643c92f/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(320px, 100%); min-height:50px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '72a2f0a46dd99cbc2b70804fe643c92f',
+      'format' : 'iframe',
+      'height' : 50,
+      'width' : 320,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/72a2f0a46dd99cbc2b70804fe643c92f/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(300px, 100%); min-height:250px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : 'f72f94ce3dbf55b9fddcaa8de58243f3',
+      'format' : 'iframe',
+      'height' : 250,
+      'width' : 300,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/f72f94ce3dbf55b9fddcaa8de58243f3/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(728px, 100%); min-height:90px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '961898332b428d637c1e67cf875348d2',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/961898332b428d637c1e67cf875348d2/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(728px, 100%); min-height:90px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '961898332b428d637c1e67cf875348d2',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/961898332b428d637c1e67cf875348d2/invoke.js"></script>
+</div>
+
+<div class="ad-slot" style="width:min(728px, 100%); min-height:90px" aria-label="Advertisement">
+  <script>
+    atOptions = {
+      'key' : '961898332b428d637c1e67cf875348d2',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/961898332b428d637c1e67cf875348d2/invoke.js"></script>
+</div>
+
+<section class="timer-box timer-section" id="timer-section">
+      <h2>Wait 10s to get the movie</h2>
+      <div class="timer" id="timer" role="timer" aria-label="10 seconds remaining">
+        <div class="timer-inner">
+          <span id="seconds">10</span>
+          <span class="unit">SECONDS</span>
+        </div>
+      </div>
+      <p id="status" aria-live="polite"> </p>
+    </section>
+  </main>
+
+  <script>
+    const TELEGRAM_URL = "https://t.me/+kBTl2SAWL7E3ZDQ1";
+    const TOTAL_SECONDS = 15;
+    const section = document.getElementById("timer-section");
+    const timer = document.getElementById("timer");
+    const secondsText = document.getElementById("seconds");
+    const status = document.getElementById("status");
+    let started = false;
+
+    function startTimer() {
+      if (started) return;
+      started = true;
+      section.classList.add("is-running");
+      const startTime = Date.now();
+      let shownSeconds = TOTAL_SECONDS;
+
+      function update() {
+        const elapsed = (Date.now() - startTime) / 1000;
+        const remaining = Math.max(0, TOTAL_SECONDS - elapsed);
+        const wholeSeconds = Math.ceil(remaining);
+        const progress = Math.min(elapsed / TOTAL_SECONDS, 1) * 360;
+        if (wholeSeconds !== shownSeconds) {
+          shownSeconds = wholeSeconds;
+          secondsText.classList.remove("tick");
+          void secondsText.offsetWidth;
+          secondsText.textContent = wholeSeconds;
+          secondsText.classList.add("tick");
+        }
+        timer.style.setProperty("--progress", progress + "deg");
+        timer.setAttribute("aria-label", wholeSeconds + " seconds remaining");
+
+        if (remaining > 0) {
+          window.requestAnimationFrame(update);
+          return;
+        }
+
+        section.classList.remove("is-running");
+        section.classList.add("is-complete");
+        if (/^https:\/\/t\.me\/[a-zA-Z0-9_+/.-]+\/?$/.test(TELEGRAM_URL)) {
+          window.location.href = TELEGRAM_URL;
+        } else {
+          status.textContent = "Add your Telegram link to enable redirect.";
+        }
+      }
+      update();
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        startTimer();
+        observer.disconnect();
+      }
+    }, { threshold: 0.35 });
+    observer.observe(section);
+  </script>
+<script src="https://pl31588347.profitableratecpmnetwork.com/40/03/0c/40030cef91c42ec4244a16f16808f7a1.js"></script>
+</body></html>
